@@ -10,3 +10,15 @@ templ HeaderTemplate() {
 		<p>Some text</p>
 	</header>
 }
+
+type FooterProps struct {
+	Links map[string]templ.SafeURL
+}
+
+templ FooterTemplate(links FooterProps) {
+	<footer data-testid="footerTemplate">
+		for key, value := range links.Links {
+			<a href={ value }>{ key }</a>
+		}
+	</footer>
+}

@@ -8,12 +8,22 @@ import (
 	"github.com/solidsilver/hello-templ/templates"
 )
 
+var footerLinks = map[string]templ.SafeURL{
+	"Home":   "/",
+	"About":  "/about",
+	"Search": "/search",
+}
+
 func main() {
 	// component := hello("John")
-	header := templates.HeaderTemplate("bob")
+	// header := templates.HeaderTemplate()
 
-	http.Handle("/", templ.Handler(header))
+	http.Handle("/", templ.Handler(templates.Main("TestPage")))
 
-	fmt.Println("Listening on :3000")
-	http.ListenAndServe(":3000", nil)
+	http.Handle("/footer", templ.Handler(templates.FooterTemplate(templates.FooterProps{
+		Links: footerLinks,
+	})))
+
+	fmt.Println("Listening on :3001")
+	http.ListenAndServe(":3001", nil)
 }

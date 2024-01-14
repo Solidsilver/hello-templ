@@ -1,0 +1,26 @@
+package templates
+
+import "github.com/solidsilver/hello-templ/model"
+import "path"
+
+templ TodoItem(todo model.Todo) {
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title">{  todo.Name  }</h5>
+			<h6 class="card-subtitle mb-2 text-muted">{  todo.Details }</h6>
+			<p class="card-text">Created: { todo.Created  }</p>
+			<p class="card-text">Modified: { todo.LastModified  }</p>
+		</div>
+		<div class="card-footer">
+			<button
+ 				class="btn btn-danger"
+ 				hx-delete={ path.Join("todos", todo.Id, "/") }
+ 				hx-target="#todos"
+ 				hx-swap="innerHTML"
+ 				hx-trigger="click"
+			>
+				Remove
+			</button>
+		</div>
+	</div>
+}

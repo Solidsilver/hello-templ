@@ -1,0 +1,12 @@
+package templates
+
+import "github.com/solidsilver/hello-templ/model"
+
+templ Todos(todos []model.Todo) {
+	<!-- list of todo items from the "todo-item" definition -->
+	<div id="todos">
+		for _, todo := range todos {
+			@TodoItem(todo)
+		}
+	</div>
+}

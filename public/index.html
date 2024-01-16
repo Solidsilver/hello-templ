@@ -16,6 +16,22 @@
     />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      .todo-item {
+        opacity: 1;
+        transform: scale(1);
+        transition: all 100ms ease-out;
+      }
+      .todo-item.htmx-swapping {
+        opacity: 0;
+        transform: scale(1, 0.1);
+      }
+      .todo-item.htmx-added {
+        opacity: 0;
+        transform: scale(1, 0.1);
+      }
+    </style>
   </head>
 
   <body>
@@ -26,13 +42,13 @@
           <div
             id="todos"
             hx-get="/todos"
-            hx-swap="innerHTML"
+            hx-swap="outerHTML"
             hx-trigger="load"
           ></div>
           <form
             hx-post="/todos"
             hx-target="#todos"
-            hx-swap="innerHTML"
+            hx-swap="beforeend"
             hx-trigger="submit"
             hx-on::after-request="this.reset()"
           >

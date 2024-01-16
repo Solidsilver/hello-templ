@@ -1,7 +1,6 @@
 package main
 
 import (
-	"net/http"
 	"os"
 
 	"github.com/labstack/echo/v4"
@@ -75,11 +74,12 @@ func GetTodos(c echo.Context) error {
 func AddTodos(c echo.Context) error {
 	name := c.FormValue("name")
 	details := c.FormValue("details")
-	todoItems = append(todoItems, model.NewTodo(
+	newTodo := model.NewTodo(
 		name,
 		details,
-	))
-	return c.Redirect(http.StatusFound, "/todos")
+	)
+	todoItems = append(todoItems, newTodo)
+	return View(c, templates.TodoItem(newTodo))
 }
 
 func RemoveTodos(c echo.Context) error {
@@ -90,5 +90,5 @@ func RemoveTodos(c echo.Context) error {
 			break
 		}
 	}
-	return GetTodos(c)
+	return nil
 }

@@ -19,9 +19,6 @@ var footerLinks = map[string]templ.SafeURL{
 }
 
 var todoItems = []model.Todo{
-	model.NewTodo("Buy milk", "Go to the store and buy milk"),
-	model.NewTodo("Buy eggs", "Go to the store and buy eggs"),
-	model.NewTodo("Buy bread", "Go to the store and buy bread"),
 }
 
 func View(c echo.Context, cmp templ.Component) error {

@@ -8,7 +8,9 @@ templ TodoItem(todo model.Todo) {
 	<div class="card todo-item" id={ fmt.Sprintf("td-%s", todo.Id) }>
 		<div class="card-body">
 			<h5 class="card-title">{  todo.Name  }</h5>
-			<h6 class="card-subtitle mb-2 text-muted">{  todo.Details }</h6>
+            if todo.Details != "" {
+                <h6 class="card-subtitle mb-2 text-muted">{  todo.Details }</h6>
+            }
 			<p class="card-text">Created: { todo.Created  }</p>
 			<p class="card-text">Modified: { todo.LastModified  }</p>
 		</div>

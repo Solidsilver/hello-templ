@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
 type Todo struct {
 	Id           string
@@ -12,7 +16,7 @@ type Todo struct {
 
 func NewTodo(name string, details string) Todo {
 	return Todo{
-		Id:           time.Now().Local().Format("20060102150405"),
+        Id:           fmt.Sprintf("%d",rand.Int()),
 		Name:         name,
 		Details:      details,
 		Created:      time.Now().Local().Format("2006-01-02 15:04:05"),

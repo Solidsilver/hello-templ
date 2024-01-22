@@ -18,8 +18,7 @@ var footerLinks = map[string]templ.SafeURL{
 	"Search": "/search",
 }
 
-var todoItems = []model.Todo{
-}
+var todoItems = []model.Todo{}
 
 func View(c echo.Context, cmp templ.Component) error {
 	c.Response().Header().Set(echo.HeaderContentType, echo.MIMETextHTML)
@@ -46,7 +45,10 @@ func main() {
 		},
 	}))
 
-	e.Static("/", "public")
+	// e.Static("/", "public")
+	e.GET("/", func(c echo.Context) error {
+		return View(c, templates.Main("Todo App"))
+	})
 
 	// http.Handle("/", templ.Handler(templates.Main("TestPage")))
 	e.GET("/footer", func(c echo.Context) error {
@@ -56,7 +58,7 @@ func main() {
 	})
 
 	e.GET("/todos", GetTodos)
-	e.POST("/todos", AddTodos)
+	e.POST("/todos", AddTodo)
 	e.DELETE("/todos/:id", RemoveTodos)
 
 	// http.Handle("/footer")
@@ -68,15 +70,20 @@ func GetTodos(c echo.Context) error {
 	return View(c, templates.Todos(todoItems))
 }
 
-func AddTodos(c echo.Context) error {
+// Endpoint for adding a todo and returning html for a todo item
+func AddTodo(c echo.Context) error {
 	name := c.FormValue("name")
 	details := c.FormValue("details")
-	newTodo := model.NewTodo(
-		name,
-		details,
-	)
-	todoItems = append(todoItems, newTodo)
-	return View(c, templates.TodoItem(newTodo))
+	if name != "" && details != "" {
+		newTodo := model.NewTodo(
+			name,
+			details,
+		)
+		todoItems = append(todoItems, newTodo)
+		return View(c, templates.TodoItem(newTodo))
+	} else {
+		return nil
+	}
 }
 
 func RemoveTodos(c echo.Context) error {
